@@ -1,6 +1,6 @@
 // Define HTML elements
 const board = document.getElementById("game-board");
-const instructionText = document.getElementById("instruction-text");
+const instructionsText = document.getElementById("instructions-text");
 const logo = document.getElementById("logo");
 const score = document.getElementById("score");
 const highScoreText = document.getElementById("highScore");
@@ -39,14 +39,11 @@ function createGameElement(tag, className) {
 	return element;
 }
 
-// Set the position of snake or food
+// Set the position of the snake or food
 function setPosition(element, position) {
 	element.style.gridColumn = position.x;
 	element.style.gridRow = position.y;
 }
-
-// Testing draw function
-// draw();
 
 // Draw food function
 function drawFood() {
@@ -67,6 +64,7 @@ function generateFood() {
 // Moving the snake
 function move() {
 	const head = { ...snake[0] };
+
 	switch (direction) {
 		case "up":
 			head.y--;
@@ -84,12 +82,10 @@ function move() {
 
 	snake.unshift(head);
 
-	//   snake.pop();
-
 	if (head.x === food.x && head.y === food.y) {
 		food = generateFood();
 		increaseSpeed();
-		clearInterval(gameInterval); // Clear past interval
+		clearInterval(gameInterval);
 		gameInterval = setInterval(() => {
 			move();
 			checkCollision();
@@ -100,16 +96,10 @@ function move() {
 	}
 }
 
-// Test moving
-// setInterval(() => {
-//   move(); // Move first
-//   draw(); // Then draw again new position
-// }, 200);
-
-// Start game function
+// Start the game
 function startGame() {
 	gameStarted = true; // Keep track of a running game
-	instructionText.style.display = "none";
+	instructionsText.style.display = "none";
 	logo.style.display = "none";
 	gameInterval = setInterval(() => {
 		move();
@@ -121,7 +111,7 @@ function startGame() {
 // Keypress event listener
 function handleKeyPress(event) {
 	if (
-		(!gameStarted && event.code === "Space") ||
+		(!gameStarted && event.code === "space") ||
 		(!gameStarted && event.key === " ")
 	) {
 		startGame();
@@ -146,7 +136,6 @@ function handleKeyPress(event) {
 document.addEventListener("keydown", handleKeyPress);
 
 function increaseSpeed() {
-	//   console.log(gameSpeedDelay);
 	if (gameSpeedDelay > 150) {
 		gameSpeedDelay -= 5;
 	} else if (gameSpeedDelay > 100) {
@@ -190,7 +179,7 @@ function updateScore() {
 function stopGame() {
 	clearInterval(gameInterval);
 	gameStarted = false;
-	instructionText.style.display = "block";
+	instructionsText.style.display = "block";
 	logo.style.display = "block";
 }
 
